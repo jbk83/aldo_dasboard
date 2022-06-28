@@ -9,11 +9,11 @@ application up and running.
 * Configuration
 Everything can be started with docker-compose:
 
-docker-compose build
-docker-compose up -d
+`docker-compose build`
+`docker-compose up -d`
 
 The first time run:
-docker-compose exec -T web rails db:setup
+`docker-compose exec -T web rails db:setup`
 
 * How to run the test suite
 docker-compose up -d

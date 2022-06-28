@@ -1,0 +1,52 @@
+# docker-compose.yml
+version: '3.3'
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - DATABASE_HOST=db
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    networks:
+      - networks
+    ports:
+      - "5432:5432"
+  web:
+    build: 
+      context: .
+    volumes:
+      - .:/docker-rails
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - networks
+  socket_server:
+    build: 
+      context: websocket_server
+    ports:
+      - "8080:8080"
+    networks:
+      - networks
+  redis:
+    image: 'redis:6.2.7-alpine'
+    command: redis-server
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis:/data'
+    networks:
+      - networks
+volumes:
+  web:
+  db:
+  websocket_server:
+  redis:
+networks:
+  networks:
+    driver: bridge

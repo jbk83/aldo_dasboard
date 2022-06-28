@@ -1,0 +1,23 @@
+<h1>Dashboard</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <% @items.each do |item| %>
+      <th><%= item.name %></th>
+    <% end %>
+  </tr>
+  <% @stores.each do |store| %>
+  <tr>
+    <td><%= store.name %></td>
+
+    <% @items.each do |item| %>
+      <td data-store-id=<%= store.id %> data-item-id=<%= item.id %>>
+        <%= @store_items.find{ |i| i.store_id == store.id && i.item_id == item.id }&.inventory || 0 %>
+      </td>
+    <% end %>
+  
+  <% end %>
+  
+</table>
+
